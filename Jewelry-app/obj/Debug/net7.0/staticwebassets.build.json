@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Wa6peCqKBqK7wMhUIA3NCElHMB2ABvE1oj1lEkN8Ka4=",
+  "Hash": "j/I/ujNefBL/RCpMPtJu5XdbUsIgGK9N9GBfXSmqTic=",
   "Source": "Jewelry-app",
   "BasePath": "_content/Jewelry-app",
   "Mode": "Default",
@@ -83,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\97254\\source\\repos\\Jewelry-app\\Jewelry-app\\wwwroot\\js\\addItems.js",
+      "SourceId": "Jewelry-app",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\97254\\source\\repos\\Jewelry-app\\Jewelry-app\\wwwroot\\",
+      "BasePath": "_content/Jewelry-app",
+      "RelativePath": "js/addItems.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\addItems.js"
     },
     {
       "Identity": "C:\\Users\\97254\\source\\repos\\Jewelry-app\\Jewelry-app\\wwwroot\\js\\site.js",

@@ -243,3 +243,12 @@ C:\Users\97254\source\repos\Jewelry-app\Jewelry-app\obj\Debug\net7.0\refint\Jewe
 C:\Users\97254\source\repos\Jewelry-app\Jewelry-app\obj\Debug\net7.0\Jewelry-app.pdb
 C:\Users\97254\source\repos\Jewelry-app\Jewelry-app\obj\Debug\net7.0\Jewelry-app.genruntimeconfig.cache
 C:\Users\97254\source\repos\Jewelry-app\Jewelry-app\obj\Debug\net7.0\ref\Jewelry-app.dll
+C:\Users\97254\source\repos\Jewelry-app\Jewelry-app\bin\Debug\net7.0\EntityFramework.SqlServer.dll
+C:\Users\97254\source\repos\Jewelry-app\Jewelry-app\bin\Debug\net7.0\EntityFramework.dll
+C:\Users\97254\source\repos\Jewelry-app\Jewelry-app\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\97254\source\repos\Jewelry-app\Jewelry-app\bin\Debug\net7.0\System.Data.SqlClient.dll
+C:\Users\97254\source\repos\Jewelry-app\Jewelry-app\bin\Debug\net7.0\runtimes\win-arm64\native\sni.dll
+C:\Users\97254\source\repos\Jewelry-app\Jewelry-app\bin\Debug\net7.0\runtimes\win-x64\native\sni.dll
+C:\Users\97254\source\repos\Jewelry-app\Jewelry-app\bin\Debug\net7.0\runtimes\win-x86\native\sni.dll
+C:\Users\97254\source\repos\Jewelry-app\Jewelry-app\bin\Debug\net7.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\97254\source\repos\Jewelry-app\Jewelry-app\bin\Debug\net7.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll

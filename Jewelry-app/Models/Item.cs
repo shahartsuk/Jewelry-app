@@ -11,10 +11,11 @@ namespace Jewelry_app.Models
         }
         [Key]
         public int ID { get; set; }
-        [Required,Display(Name = "שם פריט")]
+        [Display(Name = "שם פריט")]
         public string Name { get; set; }
-        [Required, Display(Name = "תיאור")]
+        [Display(Name = "תיאור")]
         public string Description { get; set; }
+        public Group Group { get; set; }
         public List<Image> Images { get; set; }
         public List<Price> Prices { get; set; }
         //פונקציה של הוספת תמונה

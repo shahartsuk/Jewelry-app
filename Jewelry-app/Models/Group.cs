@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
@@ -16,7 +18,7 @@ namespace Jewelry_app.Models
         public int ID { get; set; }
         [Required, Display(Name = "שם קבוצה")]
         public string Name { get; set; }
-        [Required, Display(Name = "תיאור")]
+        [Display(Name = "תיאור")]
         public string Description { get; set; }
         [Display(Name = "תמונה")]
         public byte[] Image { get; set; }
@@ -34,61 +36,69 @@ namespace Jewelry_app.Models
             } }
 
         // פונקציה של הוספת פריט
-        public void AddItem(string name,string description,decimal price)
+        public Item AddItem(string name,string description,decimal price)
         {
-            Item item = new Item { Name = name,Description=description };
+            Item item = new Item { Name = name,Description=description,Group=this };
             item.AddPrice(price);
-            AddItem(item);
+            return AddItem(item);
         }
-        public void AddItem(string name, string description, decimal price, IFormFile image)
+        public Item AddItem(string name, string description, decimal price, DateTime start, DateTime end)
         {
-            Item item = new Item { Name = name, Description = description};
+            Item item = new Item { Name = name, Description = description, Group = this };
+            item.AddPrice(price, start, end);
+           return AddItem(item);
+        }
+        public Item AddItem(string name, string description, decimal price, IFormFile image)
+        {
+            Item item = new Item { Name = name, Description = description, Group = this };
             item.AddPrice(price);
             item.AddImage(image);
-            AddItem(item);
+            return AddItem(item);
         }
-        public void AddItem(string name, string description, decimal price, List<IFormFile> images)
+        public Item AddItem(string name, string description, decimal price, List<IFormFile> images)
         {
-            Item item = new Item { Name = name, Description = description };
+            Item item = new Item { Name = name, Description = description, Group = this };
             item.AddPrice(price);
             foreach(IFormFile image in images)
             {
                 item.AddImage(image);
             }
-            AddItem(item);
+            return AddItem(item);
         }
-        public void AddItem(string name, string description, decimal price, List<IFormFile> images,DateTime start,DateTime end)
+        public Item AddItem(string name, string description, decimal price, List<IFormFile> images,DateTime start,DateTime end)
         {
-            Item item = new Item { Name = name, Description = description };
+            Item item = new Item { Name = name, Description = description, Group = this };
             item.AddPrice(price, start, end);
             foreach (IFormFile image in images)
             {
                 item.AddImage(image);
             }
-            AddItem(item);
+            return AddItem(item);
         }
-        public void AddItem(string name, string description, decimal price, IFormFile image, DateTime start, DateTime end)
+        public Item AddItem(string name, string description, decimal price, IFormFile image, DateTime start, DateTime end)
         {
-            Item item = new Item { Name = name, Description = description };
+            Item item = new Item { Name = name, Description = description, Group = this };
             item.AddPrice(price, start, end);
             item.AddImage(image);
-            AddItem(item);
+            return AddItem(item);
         }
-        public void AddItem(Item item)
+        public Item AddItem(Item item)
         {
+            item.Group= this;
            Items.Add(item);
+            return item;
         }
         // פונקציה של הוספת תת קבוצה
-        public void AddSubGroup(string name)
+        public Group AddSubGroup(string name)
         {
             Group group = new Group
             {
                 Name = name,
                 Parent = this
             };
-            AddSubGroup(group);
+            return AddSubGroup(group);
         }
-        public void AddSubGroup(string name,string description)
+        public Group AddSubGroup(string name,string description)
         {
             Group group = new Group
             {
@@ -96,20 +106,43 @@ namespace Jewelry_app.Models
                 Description = description,
                 Parent = this
             };
-            AddSubGroup(group);
+            return AddSubGroup(group);
         }
-        public void AddSubGroup(string name, string description,IFormFile image)
+        public Group AddSubGroup(string name, string description,IFormFile image)
         {
             Group group = new Group { Name = name,Description = description,SetImage = image,
             Parent = this};
-            AddSubGroup(group);
+            return AddSubGroup(group);
 
         }
-        public void AddSubGroup(Group subGroup)
+        public Group AddSubGroup(Group subGroup)
         {
+            subGroup.Parent= this;
             SubGroups.Add(subGroup);
+            return subGroup;
         }
-
+        //הצגת פריטים כלל תתי הקבוצות
+        [NotMapped]
+        public List<Item> AllItems { get { return GetItems(this); } }
+        private List<Item> GetItems(Group group)
+        {
+            List <Item> items = new List <Item>();
+            return GetItems(group,items);
+        }
+        private List<Item> GetItems(Group group, List<Item> items)
+        {
+            if (group.SubGroups.Count > 0)
+                foreach (Group group1 in group.SubGroups)
+                {
+                    return GetItems(group1, items);
+                }
+            if(group.Items.Count >0)
+                foreach (Item item in group.Items)
+                {
+                    items.Add(item);
+                }
+                return items;
+        }
     }
 }
 

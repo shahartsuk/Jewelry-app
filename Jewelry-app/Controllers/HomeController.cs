@@ -1,6 +1,7 @@
 ﻿using Jewelry_app.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Data.Entity;
 
 namespace Jewelry_app.Controllers
 {
@@ -13,9 +14,24 @@ namespace Jewelry_app.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? id)
         {
-            return View();
+            Group group = DataLayer.Instance.GroupsAllIncludes.ToList().Find(g=>g.ID == id);
+            if(id == null)
+            {
+                group = DataLayer.Instance.GroupsAllIncludes.ToList().FirstOrDefault();
+                return View(group);
+            }
+            return View(group);
+        }
+        public IActionResult Details(int? id)
+        {
+            Item item = DataLayer.Instance.Items.Include(i=>i.Prices).Include(i=>i.Images).ToList().Find(i=>i.ID == id);
+            if (id == null)
+            {
+                return View("Index");
+            }
+            return View(item);
         }
         public IActionResult test()
         {
