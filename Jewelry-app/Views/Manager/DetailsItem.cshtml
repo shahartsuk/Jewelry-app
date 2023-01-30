@@ -1,10 +1,10 @@
 ﻿@model Jewelry_app.Models.Item
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "DetailsItem";
 }
 
-<h1>פרטי התכשיט</h1>
+<h1>DetailsItem</h1>
 
 <div>
     <h4>Item</h4>
@@ -25,7 +25,7 @@
         @if (Model.ActivPrices.ToList().Count > 0)
         {
             <dt class="col-sm-2">
-                מחיר קבוע
+               מחיר קבוע
             </dt>
             <dd class="col-sm-10">
                 @Html.DisplayFor(model => model.ActivPrices.ToList().First().MyPrice)
@@ -41,11 +41,11 @@
                 </dd>
             }
         }
-        @if(Model.Images.ToList().Count > 0)
+        @if (Model.Images.ToList().Count > 0)
         {
-            @foreach(var image in Model.Images.ToList())
+            @foreach (var image in Model.Images.ToList())
             {
-                <dd class="col-sm-10">
+                 <dd class="col-sm-2">
                 <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(image.MyImage)" width="90" height="60" />
                 </dd>
             }
@@ -53,6 +53,6 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("עריכה", "EditItem", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>

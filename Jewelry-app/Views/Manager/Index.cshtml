@@ -97,6 +97,7 @@
                     <td>
                         @Html.ActionLink("הוספת מחיר ל"+item.Name, "Create", new {  id=item.ID  }) |
                         @Html.ActionLink("הוספת תמונה ל"+item.Name, "AddItem", new {  id=item.ID  }) |
+                        @Html.ActionLink("פרטי תכשיט "+item.Name, "DetailsItem", new {  id=item.ID  }) |
                         @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                     </td>
                 </tr>

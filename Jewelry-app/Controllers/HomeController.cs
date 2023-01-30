@@ -16,13 +16,23 @@ namespace Jewelry_app.Controllers
 
         public IActionResult Index(int? id)
         {
-            Group group = DataLayer.Instance.GroupsAllIncludes.ToList().Find(g=>g.ID == id);
-            if(id == null)
-            {
-                group = DataLayer.Instance.GroupsAllIncludes.ToList().FirstOrDefault();
-                return View(group);
-            }
+            //קבלת כל הקבוצות מהמסד נתונים
+            List<Group> groups = DataLayer.Instance.GroupsAllIncludes;
+            //בדיקה האם התקבל קוד,אם לא מחזיר את הראשי
+            if (id == null) return View(groups.FirstOrDefault());
+            //מחפש את הקבוצה לפי הקוד שהתקבל
+            Group group = groups.Find(g => g.ID == id);
+            //אם התקבל קוד שלא נמצא לי במסד נתונים מחזיר את הראשי
+            if(group == null) return View(groups.FirstOrDefault());
+            //מחזיר את הקבוצה שנמצאה
             return View(group);
+            //Group group = DataLayer.Instance.GroupsAllIncludes.ToList().Find(g=>g.ID == id);
+            //if(id == null)
+            //{
+            //    group = DataLayer.Instance.GroupsAllIncludes.ToList().FirstOrDefault();
+            //    return View(group);
+            //}
+            //return View(group);
         }
         public IActionResult Details(int? id)
         {

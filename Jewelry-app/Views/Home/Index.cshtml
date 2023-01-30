@@ -7,7 +7,14 @@
 <h1>חנות תכשיטים</h1>
 
 <div>
-    <h4>תכשיטים</h4>
+    <h4>@Model.Name</h4>
+    @*@if(Model.SubGroups.Count > 0)
+    {
+        @foreach (Group subGroup in Model.SubGroups)
+        {
+            
+        }
+    }*@
     @if(Model.AllItems.ToList().Count > 0)
     {
     <div class="row">
@@ -16,12 +23,25 @@
             <div class="card" style="width: 18rem;">
                 @if (item.Images.Count > 0 && item.Images.First() != null)
                 {
+                    <p class="card-text">
                     <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(item.Images.First().MyImage)" width="120" height="90" />
+                        </p>
                 }
                 <div class="card-body">
                     <h5  class="card-title">@item.Name</h5>
                     <p class="card-text">@item.Description</p>
-                </div>
+                        @if (item.ActivPrices.ToList().Count > 0)
+                        {
+                            <p class="card-text">מחיר קבוע</p>
+                            <p class="card-text">@item.ActivPrices.ToList().First().MyPrice</p>
+                            @if (item.ActivPrices.ToList().Count > 1)
+                            {
+                                <p class="card-text">מחיר מבצע💥</p>
+                                <p class="card-text">@item.ActivPrices.ToList().Last().StartDate עד @item.ActivPrices.ToList().Last().EndTime</p>
+                                <p class="card-text">@item.ActivPrices.ToList().Last().MyPrice</p>
+                            }
+                        }
+                    </div>
                 <div class="card-body">
                     <a asp-action="Details" asp-route-id="@item.ID" class="card-link">פרטי התכשיט</a>
                     <a asp-action="Index" asp-route-id="@item.ID" class="card-link">קנייה</a>
@@ -30,7 +50,14 @@
         }
         </div>
     }
-       @* <dt class = "col-sm-2">
+</div>
+
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@* <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ID)
         </dt>
         <dd class = "col-sm-10">
@@ -48,10 +75,3 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>*@
-   
-</div>
-
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>

@@ -63,6 +63,21 @@ namespace Jewelry_app.Controllers
             }
             return RedirectToAction("Index","Home");
         }
+        //פונקציה המציגה את פרטי התכשיט
+        public IActionResult DetailsItem(int? id)
+        {
+            //List<Item> items = DataLayer.Instance.Items.Include(i => i.Prices).Include(i => i.Images).ToList();
+            if (id == null)
+            {
+                return View("Index");
+            }
+            Item item = DataLayer.Instance.Items.Include(i => i.Prices).Include(i => i.Images).ToList().Find(i => i.ID == id);
+            if(item == null) return View("Index");
+            return View(item);
+        }
+        public IActionResult EditItem(int id) 
+        {
+        }
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult AddItem(VMCreateItem VM)
         {

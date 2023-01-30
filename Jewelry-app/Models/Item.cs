@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Jewelry_app.Models
 {
@@ -42,6 +43,16 @@ namespace Jewelry_app.Models
             Prices.Add(price);
             return price;
         }
-
+        [NotMapped]
+        public List<Price> ActivPrices { get
+            {
+                return GetActivPrice(this);
+            } }
+        public List<Price> GetActivPrice(Item item)
+        {
+            List<Price> prices = this.Prices;
+            List<Price> PriceAndDiscount = prices.FindAll(p => p.End > DateTime.Now && p.Start < DateTime.Now);
+            return PriceAndDiscount;
+        }
     }
 }
