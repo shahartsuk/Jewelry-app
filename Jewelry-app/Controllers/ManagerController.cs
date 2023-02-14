@@ -52,6 +52,52 @@ namespace Jewelry_app.Controllers
             }
             return RedirectToAction("Index");
         }
+        public IActionResult DetailsItem(int? id)
+        {
+            //List<Item> items = DataLayer.Instance.Items.Include(i => i.Prices).Include(i => i.Images).ToList();
+            if (id == null)
+            {
+                return View("Index");
+            }
+            Item item = DataLayer.Instance.Items.Include(i => i.Prices).Include(i => i.Images).ToList().Find(i => i.ID == id);
+            if (item == null) return View("Index");
+            return View(item);
+        }
+        public IActionResult EditItem(int? id)
+        {
+            //קבלת רשימת הפריטים מהמסד נתונים,ומציאת הפריט לפי הקוד
+            Item item = DataLayer.Instance.Items.Include(i=>i.Prices).Include(i=>i.Images).ToList().Find(i => i.ID == id);
+            //אם הקוד ריק חזרה לדף הבית
+            if (id == null) return RedirectToAction("Index");
+            //אם הקוד לא נכון והפריט ריק חזרה לדף הבית
+            if (item == null) return RedirectToAction("Index");
+            return View(new VMEditItem { Item = item, Price = item.Prices.FirstOrDefault()});
+        }
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult EditItem(VMEditItem VM)
+        {
+            //אם הפריט שהתקבל ריק חזרה לדף הבית
+            if (VM == null) return RedirectToAction("Index");
+            //מציאת הפריט מהמסד נתונים לפי הפריט שקיבלנו
+            Item itemDB = DataLayer.Instance.Items.Include(i => i.Prices).Include(i => i.Images).ToList().Find(i=>i.ID == VM.Item.ID);
+            //בדיקה אם קיבלנו את הפריט מהמסד נתונים
+            if (itemDB == null) return RedirectToAction("Index");
+            //עדכון הנתונים של הפריט
+            itemDB.Name = VM.Item.Name;
+            itemDB.Description = VM.Item.Description;
+            if(VM.Price != null)
+            {
+                itemDB.AddPrice(VM.Price);
+            }
+            if(VM.File != null)
+            {
+                itemDB.AddImage(VM.File);
+            }
+            DataLayer.Instance.SaveChanges();
+            //בשביל להוסיף תמונה או מחיר אני שולח את המודל של יצירת הפריט
+            return View("Details", new VMEditItem { Item = itemDB });
+        }
+        
         public IActionResult AddItem(int? id)
         {
             List<Group> groups = DataLayer.Instance.Groups.ToList();
@@ -64,20 +110,7 @@ namespace Jewelry_app.Controllers
             return RedirectToAction("Index","Home");
         }
         //פונקציה המציגה את פרטי התכשיט
-        public IActionResult DetailsItem(int? id)
-        {
-            //List<Item> items = DataLayer.Instance.Items.Include(i => i.Prices).Include(i => i.Images).ToList();
-            if (id == null)
-            {
-                return View("Index");
-            }
-            Item item = DataLayer.Instance.Items.Include(i => i.Prices).Include(i => i.Images).ToList().Find(i => i.ID == id);
-            if(item == null) return View("Index");
-            return View(item);
-        }
-        public IActionResult EditItem(int id) 
-        {
-        }
+        
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult AddItem(VMCreateItem VM)
         {
@@ -93,3 +126,35 @@ namespace Jewelry_app.Controllers
         }
     }
 }
+//[HttpPost, ValidateAntiForgeryToken]
+//public IActionResult addImage(VMCreateItem VM)
+//{
+//    //במידה ולא התקבל אובייקט\חזרה לדף הבית
+//    if (VM == null) return RedirectToAction("Index");
+//    //מציאת הפריט שאני רוצה להוסיף לו תמונה מהמסד נתונים
+//    Item? item = DataLayer.Instance.Items.ToList().Find(i => i.ID == VM.Item.ID);
+//    //בדיקה אם הפריט שקיבלתי הוא ריק
+//    if(item == null) return RedirectToAction("Index");
+//    if(VM.File != null)
+//    {
+//        item.AddImage(VM.File);
+//        DataLayer.Instance.SaveChanges();
+//    }
+//    return View();
+//}
+//[HttpPost, ValidateAntiForgeryToken]
+//public IActionResult addPrice(VMCreateItem VM)
+//{
+//    //במידה ולא התקבל אובייקט\חזרה לדף הבית
+//    if (VM == null) return RedirectToAction("Index");
+//    //מציאת הפריט שאני רוצה להוסיף לו תמונה מהמסד נתונים
+//    Item? item = DataLayer.Instance.Items.ToList().Find(i => i.ID == VM.Item.ID);
+//    //בדיקה אם הפריט שקיבלתי הוא ריק
+//    if (item == null) return RedirectToAction("Index");
+//    if (VM.Price != null)
+//    {
+//        item.AddPrice(VM.Price);
+//        DataLayer.Instance.SaveChanges();
+//    }
+//    return View();
+//}

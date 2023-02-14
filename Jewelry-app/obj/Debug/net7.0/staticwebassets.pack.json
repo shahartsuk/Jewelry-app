@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\97254\\source\\repos\\Jewelry-app\\Jewelry-app\\wwwroot\\js\\addImage.js",
+      "PackagePath": "staticwebassets\\js\\addImage.js"
+    },
+    {
       "Id": "C:\\Users\\97254\\source\\repos\\Jewelry-app\\Jewelry-app\\wwwroot\\js\\addItems.js",
       "PackagePath": "staticwebassets\\js\\addItems.js"
     },
